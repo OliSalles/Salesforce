@@ -1,0 +1,89 @@
+<!-- ************************************ Related List component 
+
+   Author: Lucas Salles   Sp/Brasil - 22/June/2018
+    email: LucasAllesOliveira@gmail.com 
+********************************************************* --> 
+
+<aura:component controller="RLRatesCtrl" 
+                implements="flexipage:availableForAllPageTypes,force:hasRecordId,forceCommunity:availableForAllPageTypes" 
+                    access="global">
+	
+    <aura:attribute name="recordId"        type="String" /> 
+	<aura:attribute name="recordTypeName"  type="String" />
+    <aura:attribute name="errorsMsg"  	   type="String" />
+    
+    <aura:attribute name="initTable"       type="Boolean" default="false"/>
+    <aura:attribute name="renderTable"     type="Boolean" default="false"/> 
+    <aura:attribute name="hideCheckbox"    type="Boolean" default="true" /> 
+    <aura:attribute name="showModal"       type="Boolean" default="false"/> 
+        
+    <aura:attribute name="objectApi"       type="String"  default="<OBJECT API>"/>
+    <aura:attribute name="setList"         type="String"  default="<SETLIST>"/> 
+    <aura:attribute name="objectName"      type="String"  default="<OBJECT NAME>"/> 
+    <aura:attribute name="filter"          type="String"  default="WHERE <FILTER>"/> 
+    
+    <aura:attribute name="listRates"       type="Object[]"/> 
+ 
+    <!--  Anchor element name -->
+    <aura:attribute name="anchorNameRow"   type="String" />
+    
+    <!-- Title Variables (count is required) --> 
+    <aura:attribute name="title"  type="String"  default="Rates"/>
+    <aura:attribute name="count"  type="Decimal" default="0"/>
+	
+	<aura:handler   name="init"   value="{!this}" action="{!c.init}"/>
+    
+    <div> 
+        <article class="slds-card slds-card_boundary">            
+            <lightning:card variant="base" iconName="custom:custom68"> 
+                <aura:set attribute="title"> 
+                    {!v.title} ({!v.count}) 
+                </aura:set> 
+                 
+                <aura:set attribute="actions">
+                    <lightning:button label ="New Rate"
+                                      variant="neutral"
+                                      onclick="{!c.showModal}">
+                    </lightning:button>
+                </aura:set>  
+            </lightning:card> 
+            
+            <aura:If isTrue="{!v.initTable}">
+                <aura:renderIf isTrue="{!v.renderTable}">            
+                    <div class="slds-card__body">
+                        
+                        <!-- Table Component -->
+                        <c:DataTable 
+                            title="{!v.title}"
+                            fieldSetList="{!v.setList}" 
+                            objectName="{!v.objectName}" 
+                            filter="{!v.filter}"
+                            stgRecordId="{!v.recordId}"
+                            hideCheckboxColumn="{!v.hideCheckbox}" 
+                            count="{!v.count}"
+                            renderTable="{!v.renderTable}" 
+                            objectApi="{!v.objectApi}"/>
+                    </div>
+                </aura:renderIf>
+        	</aura:If>
+        </article>  
+        
+        <aura:If isTrue="{!v.showModal}">
+            <div class="slds-modal slds-fade-in-open">
+                <div class="demo-only" style="height: 640px;">
+                    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" 
+                             aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                        <div class="slds-modal__container">        
+                            
+                            <c:ConsultantRateForm  
+                                recordId="{!v.recordId}" 
+                            	recordTypeName="{!v.recordTypeName}"
+                            	showModal="{!v.showModal}"/>
+                        </div>                
+                    </section>
+                    <div class="slds-backdrop slds-backdrop_open"></div>
+                </div>
+            </div>     
+        </aura:If>
+    </div> 
+</aura:component>

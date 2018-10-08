@@ -1,0 +1,77 @@
+<!-- ************************************ DataTable component 
+
+   Author: Lucas Salles   Sp/Brasil - 22/June/2018
+    email: LucasAllesOliveira@gmail.com 
+********************************************************* --> 
+
+<aura:component controller="DataTableCtrl"
+                implements="flexipage:availableForAllPageTypes,force:hasRecordId,forceCommunity:availableForAllPageTypes" 
+                    access="global">
+    
+    <aura:attribute name="mydata"     type="Object"/>
+    <aura:attribute name="mycolumns"  type="List"/>
+
+    <!-- Mandatory parameters for the table  
+		 fieldSetList : Name of the setList with the fields for the columns.
+		 objectName   : Object Name. 
+		 filter       : Filter used on the query. --> 
+    
+    <aura:attribute name="count"  	          type="Decimal" default="0"/>    
+    <aura:attribute name="title"              type="String"  default=""/>
+    <aura:attribute name="fieldSetList"       type="String"  default=""/>
+    <aura:attribute name="objectApi"          type="String"  default=""/>
+    <aura:attribute name="objectName"         type="String"  default=""/>
+    <aura:attribute name="filter"             type="String"  default=""/>
+    <aura:attribute name="filter2"         	  type="String"  default=""/> 
+    <aura:attribute name="stgRecordId"  	  type="String"  default=""/>
+    <aura:attribute name="hideCheckboxColumn" type="boolean" default=""/>
+    <aura:attribute name="viewAllMode"        type="Boolean" default="false"/>
+    <aura:attribute name="renderTable"        type="Boolean" default="false"/>
+    
+	<aura:handler name="init" value="{! this }" action="{! c.doInit }"/>
+    
+    
+
+    <aura:if isTrue="{!v.viewAllMode}">
+
+        <div class="slds-grid slds-grid--vertical slds-set-height_full"> 
+            <div class="slds-page-header--object-home slds-page-header_joined slds-page-header_bleed slds-page-header slds-shrink-none">
+              <div class="slds-grid">
+                  <div class="slds-media">
+                    <div class="slds-media__body">
+                      <h1 class="slds-page-header__title slds-truncate slds-align-middle" title="{! v.title}">{! v.title}</h1>
+                    </div>
+                  </div>
+              </div>
+              <div class="slds-grid">
+                  <div class="slds-col slds-align-bottom slds-m-top_small">
+                      <p class="slds-text-body--small"> {!v.count} item{!v.count > 1 ? 's': ''} </p>
+                  </div>
+              </div>
+            </div> 
+            <div class="uiScroller scroller-wrapper scroll-bidirectional native">
+                <lightning:datatable 
+                    keyField     ="Id"  
+                    data         ="{!v.mydata}"
+                    columns      ="{!v.mycolumns}" 
+                    hideCheckboxColumn  ="{!v.hideCheckboxColumn}" /> 
+            </div>
+        </div>
+
+        <aura:set attribute="else">
+            <div>
+                <lightning:datatable 
+                    keyField     ="Id" 
+                    data         ="{!v.mydata}"
+                    columns      ="{!v.mycolumns}" 
+                    hideCheckboxColumn  ="{!v.hideCheckboxColumn}" />
+            </div>
+            <footer class="slds-card__footer">
+                <a class="slds-card__footer-action" onclick="{! c.viewAll}">View All
+                    <span class="slds-assistive-text">{!v.title}</span>
+                </a>
+            </footer>
+        </aura:set>
+    </aura:if>
+
+</aura:component>
