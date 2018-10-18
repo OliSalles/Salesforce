@@ -1,10 +1,9 @@
-<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" 
-                    access="global">
-    
-  <aura:attribute name="oRecord"         type="Object[]" />
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+  <aura:attribute name="oRecord" type="Object[]" />
   <aura:attribute name="columnNameSearchMatch" type="String" />
-  <aura:attribute name="IconName"          type="string"/> 
-  <aura:attribute name="displayValue"        type="String" />  
+  <aura:attribute name="IconName" type="string"/> 
+  <aura:attribute name="displayValue" type="String" />
+  
   
   <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
 

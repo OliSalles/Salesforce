@@ -10,8 +10,7 @@
       compEvent.fire();
     },
 
-    doInit: function(component,event)
-    {
+    doInit: function(component,event) {
       var oRecord = component.get('v.oRecord');
       var columnNameSearchMatch = component.get('v.columnNameSearchMatch');
       var displayValue = oRecord[columnNameSearchMatch];

@@ -1,12 +1,12 @@
 <aura:component controller="LightningLookupCtrl" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
     <!--declare attributes--> 
-    <aura:attribute name="selectedRecord"        type="Object[]" description="Use,for store SELECTED sObject Record"/>
-    <aura:attribute name="listOfSearchRecords"   type="List" 	 description="Use,for store the list of search records which returns from apex class"/>
-    <aura:attribute name="listRecords"           type="List"  />
+    <aura:attribute name="selectedRecord"       type="Object[]" description="Use,for store SELECTED sObject Record"/>
+    <aura:attribute name="listOfSearchRecords"  type="List"     description="Use,for store the list of search records which returns from apex class"/>
+    <aura:attribute name="listRecords"          type="List"  />
     
     <aura:attribute name="enableDataBaseSearch"  type="Boolean" />
     <aura:attribute name="columnNameSearchMatch" type="String" default="Name" description="column name to 'Match' for the search functionality" />
-    <aura:attribute name="columnNameRemoveMatch" type="String" default="Id"   description="column name to 'Match' for the remove functionality" />
+    <aura:attribute name="columnNameRemoveMatch" type="String" default="Id" description="column name to 'Match' for the remove functionality" />
 
     <aura:attribute name="SearchKeyWord" type="string"/>
     <aura:attribute name="objectAPIName" type="string"  default=""/>
@@ -21,7 +21,7 @@
     
     <aura:attribute name="SearchPlaceHolder" type="String" default="Search..." />
     
-    <aura:handler   name="init" value="{!this}" action="{!c.init}"/> 
+    <aura:handler   name="init"   value="{!this}"       action="{!c.init}"/> 
     <aura:handler   name="change" value="{!v.fillPill}" action="{!c.handleFillPill}"/> 
     
     <!--declare events hendlers-->  
@@ -83,13 +83,10 @@
                         </span>
                       </li>
                     </aura:iteration>
-                </ul>
-              
+                </ul>              
             </div>
-            <!-- <lightning:pillContainer items="{!v.selectedRecord}" onitemremove="{!c.handleRemovePill}" /> -->
         </aura:if>
 
         <div aura:id="messageError" class="slds-form-element__help">{!v.messageError}</div>
-
     </div>
 </aura:component>

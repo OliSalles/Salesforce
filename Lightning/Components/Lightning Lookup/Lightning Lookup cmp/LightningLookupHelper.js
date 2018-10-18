@@ -106,11 +106,9 @@
                 this.removeSelectedElement(component);
             }            
         }
-
     },
 
-    doValidation: function(component,event)
-    {
+    doValidation: function(component,event) {
         var selectedRecord = component.get('v.selectedRecord');
         var returnValue;
         var messageError = component.find('messageError');
@@ -129,6 +127,4 @@
 
         return returnValue;
     }
-
-
 })
