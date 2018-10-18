@@ -1,0 +1,72 @@
+<aura:component  controller="GoogleAutoSearchCtrl" implements="force:hasRecordId,flexipage:availableForAllPageTypes" access="global" >
+    <aura:attribute 	name="options" 			type="List" />
+    <aura:attribute 	name="recordId" 	    type="String" />
+    <aura:attribute 	name="showAlert" 		type="Boolean" />
+    <aura:attribute 	name="selectedValue" 	type="String" default="en" />
+    <aura:attribute 	name="selectedOption" 	type="String" default="English" />
+    
+    <!-- After call out , suggestions stored in it -->
+    <aura:attribute 	name="filteredOptions" 	type="Object[]" />
+    <aura:attribute 	name="searchKey" 		type="String" />
+    <aura:attribute 	name="placeId" 	    	type="String" />
+    <aura:attribute 	name="placeholder" 		type="String"  default="Enter with contact location" />    
+    <aura:attribute 	name="count" 			type="Integer" default="0" description ="Count how many digits have been entered" />
+    <aura:registerEvent name="toastEvent" 		type="force:showToast"/>
+    
+    <ltng:require styles="{!$Resource.SLDS27 + '/styles/lightning-design-system-ltng.css'}" />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    
+    <!-- Auto Suggestion Start -->    
+    <div class="slds-card cGoogleAutoSearch slds-p-around_medium" Style="display: flow-root">  
+        
+        <div class="slds-form-element">
+            
+            <aura:if isTrue="{!v.showAlert}">
+                <div class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_info" role="alert" >
+                    <lightning:icon iconName="utility:warning" alternativeText="Warning!" variant="warning" />
+                    <h2>Please input contact address.</h2>
+                </div>
+            </aura:if>
+            <div class="slds-form-element__control">                
+                <div class="slds-combobox_container slds-has-inline-listbox"> 
+                    <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-combobox-lookup"
+                         aria-expanded ="false"
+                         aria-haspopup ="listbox"
+                         role		   ="combobox"
+                         aura:id	   ="searchLookup">
+                        
+                        <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_left"
+                             aura:id="iconDirection">
+                            
+                            <ui:inputText updateOn="keyup"
+                                          keyup="{!c.searchAddress}"
+                                          class="slds-input slds-combobox__input"
+                                          value="{!v.searchKey}"
+                                          placeholder="{!v.placeholder}" />
+                        </div>                        
+                        
+                        <aura:iteration items="{!v.filteredOptions}" var="option" indexVar="idx">                                      
+                            <div class="slds-page-header" data-record="{!idx}"  onclick="{!c.selected}">
+                                <div class="slds-page-header__row">
+                                    <div class="slds-page-header__col-title">
+                                        <div class="slds-media">                                            
+                                            <div class="slds-media__body">
+                                                <div class="slds-page-header__name">                                                    
+                                                    <h1>
+                                                        <span class="slds-page-header__row">{!option.value}</span>
+                                                    </h1>                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                            
+                        </aura:iteration>                        
+                    </div>                    
+                </div>
+            </div>
+            <button class="slds-button slds-button_brand slds-float_right" onclick="{!c.save}">Save</button>  
+        </div>
+    </div>   
+</aura:component>
