@@ -1,9 +1,9 @@
 <design:component>
-	<design:attribute name="objectName" 	  label="sObject Label" 	description=""/>
+	<design:attribute name="objectName" 	  label="Object Name"	 	description=""/>
     
-    <design:attribute name="postalCode" 	  label="Postal Code Label" description=""/>
-    <design:attribute name="city" 			  label="City Label" 		description=""/>
-    <design:attribute name="state" 			  label="State Label" 		description=""/>
-    <design:attribute name="country" 		  label="country Label" 	description=""/>
-    <design:attribute name="formattedAddress" label="formattedAddress Label" description=""/>
+    <design:attribute name="postalCode" 	  label="Postal Code API" 	description=""/>
+    <design:attribute name="city" 			  label="City API" 			description=""/>
+    <design:attribute name="state" 			  label="State API" 		description=""/>
+    <design:attribute name="country" 		  label="Country API" 		description=""/>
+    <design:attribute name="formattedAddress" label="Formatted Address" description=""/>
 </design:component>
