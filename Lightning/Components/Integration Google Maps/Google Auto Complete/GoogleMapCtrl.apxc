@@ -18,16 +18,44 @@ public class GoogleAutoSearchCtrl {
     }
     
     @AuraEnabled
-    public static Boolean getAddressDetails(String placeId, String recordId) {
+    public static Boolean saveAddress(String placeId, String recordId, String objectName, 
+                    String postalCode, String city, String state, String country, String formattedAddress  ) {
             
         String url = 'https://maps.googleapis.com/maps/api/place/details/json?placeid=' + placeId + '&fields=' + getFieldsRequest() + '&key=' + getGoogleMapsAPIKey();
 
+        System.debug('url => ' + url);
+        
         ResponseMaps responseMaps = ( GoogleAutoSearchCtrl.responseMaps ) JSON.deserialize( getHttp(url), GoogleAutoSearchCtrl.responseMaps.class );        
         
-        if(recordId.startsWith('003')){
-            return setContactAddress(recordId, responseMaps);
+        SObject instantiatedObject = Schema.getGlobalDescribe().get(objectName).newSObject();      
+        
+        instantiatedObject.put('Id', recordId);
+                        
+        for(Address_components addressComponent : responseMaps.result.address_components){
+            
+            if(addressComponent.types[0] == 'postal_code')
+                instantiatedObject.put(postalCode ,addressComponent.long_name );   
+            
+            else if(addressComponent.types[0] == 'administrative_area_level_2')
+                instantiatedObject.put(city ,addressComponent.long_name );
+            
+            else if(addressComponent.types[0] == 'administrative_area_level_1')               
+                instantiatedObject.put(state ,addressComponent.long_name );
+            
+            else if(addressComponent.types[0] == 'country')
+                instantiatedObject.put(country ,addressComponent.long_name );     
         }
-        return false;
+        instantiatedObject.put(formattedAddress ,responseMaps.result.formatted_address );
+                        
+        System.debug('instantiatedObject => ' + instantiatedObject);
+                        
+        try{
+            update instantiatedObject;    
+            return true;
+        }catch(Exception ex){
+            System.debug('Error: ' + ex.getMessage());
+            return false;
+        }
     }
     
     public static String getFieldsRequest(){
@@ -57,34 +85,29 @@ public class GoogleAutoSearchCtrl {
         }
     }  
     
-    public static Boolean setContactAddress(String recordId, ResponseMaps responseMaps){
-        Contact contact = [SELECT Id, Name, Address_Line_1__c, City__c, Region__c, Country__c, Province_State__c  FROM Contact WHERE Id =: recordid][0];        
-        return true;
-    }
-    
     //Objects
     public class ResponseMaps{
         public ResponseMaps(){}
         
         public List<String> html_attributions {get;set;}
-        public Result       result   	      {get;set;}
+        public Result       result            {get;set;}
     }
     
     public class Result{        
         public List<Address_components> address_components {get;set;}
         
-        public Geometry geometry 					{get;set;}
-        public String   formatted_address 			{get;set;}                
-        public String   international_phone_number 	{get;set;}
-        public String   name 					  	{get;set;}
-        public String   place_id 			      	{get;set;}
-        public String   url 						{get;set;}
-        public String   website 					{get;set;}
+        public Geometry geometry                    {get;set;}
+        public String   formatted_address           {get;set;}                
+        public String   international_phone_number  {get;set;}
+        public String   name                        {get;set;}
+        public String   place_id                    {get;set;}
+        public String   url                         {get;set;}
+        public String   website                     {get;set;}
     }
     
     public class Address_components{
-        public String 		long_name  {get;set;}
-        public String 		short_name {get;set;}
+        public String       long_name  {get;set;}
+        public String       short_name {get;set;}
         public List<String> types      {get;set;}
     }
     

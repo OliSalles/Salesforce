@@ -1,17 +1,25 @@
 <aura:component  controller="GoogleAutoSearchCtrl" implements="force:hasRecordId,flexipage:availableForAllPageTypes" access="global" >
-    <aura:attribute 	name="options" 			type="List" />
-    <aura:attribute 	name="recordId" 	    type="String" />
-    <aura:attribute 	name="showAlert" 		type="Boolean" />
-    <aura:attribute 	name="selectedValue" 	type="String" default="en" />
-    <aura:attribute 	name="selectedOption" 	type="String" default="English" />
+    <aura:attribute     name="options"          type="List"     />
+    <aura:attribute     name="recordId"         type="String"   />
+    <aura:attribute     name="showAlert"        type="Boolean"  />
+    <aura:attribute     name="selectedValue"    type="String" default="en" />
+    <aura:attribute     name="selectedOption"   type="String" default="English" />
+
+    <aura:attribute     name="objectName"       type="String" />
+    
+    <aura:attribute     name="postalCode"       type="String" />
+    <aura:attribute     name="city"             type="String" />
+    <aura:attribute     name="state"            type="String" />
+    <aura:attribute     name="country"          type="String" />
+    <aura:attribute     name="formattedAddress" type="String" />
     
     <!-- After call out , suggestions stored in it -->
-    <aura:attribute 	name="filteredOptions" 	type="Object[]" />
-    <aura:attribute 	name="searchKey" 		type="String" />
-    <aura:attribute 	name="placeId" 	    	type="String" />
-    <aura:attribute 	name="placeholder" 		type="String"  default="Enter with contact location" />    
-    <aura:attribute 	name="count" 			type="Integer" default="0" description ="Count how many digits have been entered" />
-    <aura:registerEvent name="toastEvent" 		type="force:showToast"/>
+    <aura:attribute     name="filteredOptions"  type="Object[]" />
+    <aura:attribute     name="searchKey"        type="String"   />
+    <aura:attribute     name="placeId"          type="String"   />
+    <aura:attribute     name="placeholder"      type="String"  default="Enter with contact location" />    
+    <aura:attribute     name="count"            type="Integer" default="0" description ="Count how many digits have been entered" />
+    <aura:registerEvent name="toastEvent"       type="force:showToast" />
     
     <ltng:require styles="{!$Resource.SLDS27 + '/styles/lightning-design-system-ltng.css'}" />
     
@@ -33,8 +41,8 @@
                     <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-combobox-lookup"
                          aria-expanded ="false"
                          aria-haspopup ="listbox"
-                         role		   ="combobox"
-                         aura:id	   ="searchLookup">
+                         role          ="combobox"
+                         aura:id       ="searchLookup">
                         
                         <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_left"
                              aura:id="iconDirection">

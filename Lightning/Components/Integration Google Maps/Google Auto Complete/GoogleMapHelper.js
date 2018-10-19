@@ -51,26 +51,39 @@
         var index        = selectedItem.dataset.record;   // Get its value i.e. the index
         var place        = component.get("v.filteredOptions")[index]; // Use it retrieve the store record
         
-        component.set("v.searchKey", place.value);
-        component.set("v.placeId",   place.place_id );
+        component.set("v.searchKey", place.value );
+        component.set("v.placeId",   place.placeId );
         component.set("v.filteredOptions", []);
     },
     
     save: function (component, event) {
         
-        var placeId  = component.get("v.placeId");
-        var recordId = component.get("v.recordId");
+        var placeId     = component.get("v.placeId");
+        var recordId    = component.get("v.recordId");
         
-        var action   = component.get("c.getAddressDetails");
+        var objectName  = component.get("v.objectName");
+        
+        var postalCode  = component.get("v.postalCode");
+        var city        = component.get("v.city");
+        var state       = component.get("v.state");
+        var country     = component.get("v.country");
+        
+        var formattedAddress = component.get("v.formattedAddress");
+        
+        var action = component.get("c.saveAddress");
         action.setParams({
-            "placeId": place.placeId,
-            "recordId": recordId
+                 "placeId":placeId,
+                "recordId":recordId,
+              "objectName":objectName,
+              "postalCode":postalCode,
+                    "city":city,
+                   "state":state,
+                 "country":country,
+        "formattedAddress":formattedAddress
         });
         action.setCallback(this, function(response){
             
-            var state = response.getState();
-            
-            if(state === 'SUCCESS'){
+            if(response.getState() === 'SUCCESS'){
                 var returnValue = response.getReturnValue();                 
                 var toastEvent  = $A.get("e.force:showToast");
                 
