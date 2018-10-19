@@ -17,10 +17,5 @@ GooleMapsContainer.cmp: Lightning Component
 - Fetches contact list from Apex class
 - Prepares data in proper format
 - Send data to GoogleMaps.cmp to draw Google Map
-- This component will be embedded on Account page (only; restricted by .design file) to show all the Contacts on Google Map
-
-DemoApp.app
-- Fetches contact list from Apex class
-- Prepares data in proper format
-- Send data to GoogleMaps.cmp to draw Google Map
+- This component will be embedded on Account page (only; restricted by .design file) to show all the Contacts on Google Map.
 
