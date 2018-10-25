@@ -8,7 +8,7 @@
         count++;
 
         //Makes a request every 4 characters.
-        if( count%4 == 0 )
+        if( count%3 == 0 )
             helper.searchAddress(component, event);    
         
         component.set("v.count", count);   

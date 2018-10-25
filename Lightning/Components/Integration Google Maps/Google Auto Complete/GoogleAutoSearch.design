@@ -1,9 +1,13 @@
 <design:component>
-	<design:attribute name="objectName" 	  label="Object Name"	 	description=""/>
+    <design:attribute name="objectName" 	  label="Object Name"	 	description=""/>
     
     <design:attribute name="postalCode" 	  label="Postal Code API" 	description=""/>
     <design:attribute name="city" 			  label="City API" 			description=""/>
     <design:attribute name="state" 			  label="State API" 		description=""/>
     <design:attribute name="country" 		  label="Country API" 		description=""/>
+    <design:attribute name="latitude" 		  label="Latitude API" 		description=""/>
+    <design:attribute name="longitude" 		  label="Longitude API" 	description=""/>
     <design:attribute name="formattedAddress" label="Formatted Address" description=""/>
+    
+    <design:attribute name="alertMessage" 	  label="Alert Message" 	description=""/>
 </design:component>

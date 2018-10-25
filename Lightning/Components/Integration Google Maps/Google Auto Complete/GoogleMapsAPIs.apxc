@@ -1,0 +1,183 @@
+public with sharing class GoogleMapsAPIs {
+    
+    public Double lat {get;set;}
+    public Double lng {get;set;}
+    
+    @AuraEnabled
+    public static Boolean checkContactAddress(String recordId) {       
+        Contact contact = [SELECT Id, Address_Line_1__c FROM Contact WHERE Id =: recordId][0];        
+        
+        return contact.Address_Line_1__c == null ? true : false;
+    }
+    
+    @AuraEnabled
+    public static String getAddressAutoComplete(String input) {       
+        String url = 'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=' + EncodingUtil.urlEncode(input, 'UTF-8') + '&key=' + getGoogleMapsAPIKey();                
+        
+        return getHttp(url);
+    }
+    
+    @AuraEnabled
+    public static Location getCoordinates(String placeId) {       
+        String url = 'https://maps.googleapis.com/maps/api/place/details/json?placeid=' + placeId + '&fields=geometry/location&key=' + getGoogleMapsAPIKey();
+
+        ResponsePlaces responsePlaces = ( GoogleMapsAPIs.ResponsePlaces ) JSON.deserialize( getHttp(url), GoogleMapsAPIs.ResponsePlaces.class ); 
+        
+        return responsePlaces.result.geometry.location;
+    }
+    
+    @AuraEnabled
+    public static ResponsePlaces placeSelected(String placeId) {  
+        String url = 'https://maps.googleapis.com/maps/api/place/details/json?placeid=' + placeId + '&fields=' + getFieldsRequest() + '&key=' + getGoogleMapsAPIKey();
+        
+        //System.debug('url placeSelected => ' + url);
+        
+        // Deserialize response
+        ResponsePlaces responsePlaces = ( GoogleMapsAPIs.ResponsePlaces ) JSON.deserialize( getHttp(url), GoogleMapsAPIs.ResponsePlaces.class );
+
+        //System.debug('responsePlaces => ' + responsePlaces);        
+    
+        return responsePlaces;
+    }
+    
+    @AuraEnabled
+    public static Boolean saveAddress(String placeId, String recordId, String objectName, String JSONresponsePlaces,
+                    String postalCode, String city, String state, String country, String formattedAddress, String latitude, String longitude ) {
+            
+        ResponsePlaces responsePlaces = ( GoogleMapsAPIs.ResponsePlaces ) JSON.deserialize( JSONresponsePlaces, GoogleMapsAPIs.ResponsePlaces.class );
+                        
+        // Instantiate object to be used
+        SObject instantiatedObject = Schema.getGlobalDescribe().get(objectName).newSObject();
+                        
+        // Filling in the object fields
+        instantiatedObject.put('Id', recordId);
+                        
+        for(Address_components addressComponent : responsePlaces.result.address_components){
+            
+            if(addressComponent.types[0] == 'postal_code')
+                instantiatedObject.put(postalCode ,addressComponent.long_name ); 
+            
+            else if(addressComponent.types[0] == 'administrative_area_level_2')
+                instantiatedObject.put(city ,addressComponent.long_name );
+            
+            else if(addressComponent.types[0] == 'administrative_area_level_1')               
+                instantiatedObject.put(state ,addressComponent.long_name );
+            
+            else if(addressComponent.types[0] == 'country')
+                instantiatedObject.put(country ,addressComponent.long_name );     
+        }
+        instantiatedObject.put(formattedAddress ,responsePlaces.result.formatted_address );
+                        
+        instantiatedObject.put(latitude,  responsePlaces.result.geometry.location.lat );
+        instantiatedObject.put(longitude, responsePlaces.result.geometry.location.lng );
+                        
+        try{
+            update instantiatedObject;    
+            return true;
+        }catch(Exception ex){
+            System.debug('Error: ' + ex.getMessage());
+            return false;
+        }
+    }
+    
+    // Returns distance and time
+    public static ResponseDistanceMatrix getDistanceMatrix(String origins, String destinations) {         
+              
+        String url = 'https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=' + origins + '&destinations=' + destinations +'&key=' + getGoogleMapsAPIKey();                
+        
+        ResponseDistanceMatrix responseMaps = ( GoogleMapsAPIs.ResponseDistanceMatrix ) JSON.deserialize( getHttp(url), GoogleMapsAPIs.ResponseDistanceMatrix.class ); 
+        
+        return responseMaps;
+    }
+    
+    public static String getFieldsRequest(){
+        return 'address_component,formatted_address,geometry/location,international_phone_number,name,place_id,url,website';
+    }
+    
+    public static String getGoogleMapsAPIKey() {         
+        return 'AIzaSyC16LeILROXBdTa9kLrBUZEkvlEKax--dc';        
+    }
+    
+    public static String getHttp(String url) {        
+        try {            
+            Http http = new Http();
+            HttpRequest httpRequest = new HttpRequest();
+            httpRequest.setEndpoint(url);
+            httpRequest.setMethod('GET');
+            HttpResponse response = http.send(httpRequest);
+            
+            if (response.getStatusCode() == 200)
+                return response.getBody(); 
+            
+            else
+                return 'Error ' + response.getStatusCode() + ' : ' + response.getStatus();
+            
+        } catch (Exception e) {
+            return StringUtils.returnExceptionMessage(e.getMessage());
+        }
+    } 
+    
+    // Objects for Distance Matrix
+    public class ResponseDistanceMatrix{
+        public ResponseDistanceMatrix(){}
+        
+        @AuraEnabled public List<String> destination_addresses {get;set;}
+        @AuraEnabled public List<String> origin_addresses      {get;set;}
+        @AuraEnabled public List<Rows>   rows                 {get;set;}
+    }
+    
+    public class Rows{                
+        @AuraEnabled public List<Elements> elements {get;set;}
+    }
+    
+    public class Elements{        
+        @AuraEnabled public Distance distance {get;set;}
+        @AuraEnabled public Duration duration {get;set;}
+        @AuraEnabled public String   status   {get;set;}
+    } 
+    
+    public class Distance {        
+        @AuraEnabled public String text  {get;set;}
+        @AuraEnabled public Double value {get;set;}
+    }
+    
+    public class Duration{        
+        @AuraEnabled public String text  {get;set;}
+        @AuraEnabled public Double value {get;set;}
+    }
+    
+    // Objects for Places return
+    public class ResponsePlaces{
+        public ResponsePlaces(){}
+        
+        @AuraEnabled public List<String> html_attributions {get;set;}
+        @AuraEnabled public Result       result            {get;set;}
+    }
+    
+    public class Result{        
+        @AuraEnabled public List<Address_components> address_components {get;set;}
+        
+        @AuraEnabled public Geometry geometry                   {get;set;}
+        @AuraEnabled public String   formatted_address          {get;set;}                
+        @AuraEnabled public String   international_phone_number {get;set;}
+        @AuraEnabled public String   name                       {get;set;}
+        @AuraEnabled public String   place_id                   {get;set;}
+        @AuraEnabled public String   url                        {get;set;}
+        @AuraEnabled public String   website                    {get;set;}
+    }
+    
+    public class Address_components{
+        @AuraEnabled public String       long_name  {get;set;}
+        @AuraEnabled public String       short_name {get;set;}
+        @AuraEnabled public List<String> types      {get;set;}
+    }
+    
+    public class Geometry{
+        @AuraEnabled public Location location {get;set;}
+    }
+    
+    public class Location{        
+        @AuraEnabled public Double lat {get;set;}
+        @AuraEnabled public Double lng {get;set;}
+    } 
+}

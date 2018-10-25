@@ -1,7 +1,7 @@
 ({
     doInit: function (component, event) {
         
-        var recordId = component.get("v.recordId");
+        var recordId  = component.get("v.recordId");
         
         var action    = component.get("c.checkContactAddress");
         action.setParams({
@@ -54,9 +54,60 @@
         component.set("v.searchKey", place.value );
         component.set("v.placeId",   place.placeId );
         component.set("v.filteredOptions", []);
+        
+        //var action = component.get("c.getCoordinates");
+        
+        var action = component.get("c.placeSelected");
+        action.setParams({
+            "placeId":place.placeId
+        });
+        action.setCallback(this, function(response){
+            
+            if(response.getState() === 'SUCCESS'){
+                var returnValue = response.getReturnValue();       
+                
+                console.log("returnValue => ", returnValue);
+                
+                if(returnValue){                                        
+                    component.set("v.responsePlaces", returnValue);
+                    
+                    var listAddressComponents = returnValue.result.address_components;
+                    
+                    listAddressComponents.forEach(putAddressComponents)
+                    
+                    function putAddressComponents(item, indice) {
+                        
+                        if(listAddressComponents[indice].types[0] == 'postal_code')
+                            component.set("v.postalCodeValue" , listAddressComponents[indice].long_name +', '+ listAddressComponents[indice].short_name ); 
+                        
+                        else if(listAddressComponents[indice].types[0] == 'administrative_area_level_2')
+                            component.set("v.cityValue" ,listAddressComponents[indice].long_name +', '+ listAddressComponents[indice].short_name );
+                        
+                        else if(listAddressComponents[indice].types[0] == 'administrative_area_level_1')               
+                            component.set("v.stateValue" ,listAddressComponents[indice].long_name +', '+ listAddressComponents[indice].short_name );
+                        
+                        else if(listAddressComponents[indice].types[0] == 'country')
+                            component.set("v.countryValue" ,listAddressComponents[indice].long_name +', '+ listAddressComponents[indice].short_name );                         
+                    }
+                    
+                }else{
+                    var toastEvent = $A.get("e.force:showToast");
+                    toastEvent.setParams({
+                        "title": "Error!",
+                        "message": "The property's info has not saved.",
+                        "type": "Error"
+                    });
+                    toastEvent.fire();
+                }                
+            }
+        });
+        $A.enqueueAction(action);                
     },
     
     save: function (component, event) {
+        
+        var responsePlaces      = component.get("v.responsePlaces");
+        var JSONresponsePlaces  = JSON.stringify(responsePlaces);
         
         var placeId     = component.get("v.placeId");
         var recordId    = component.get("v.recordId");
@@ -68,18 +119,24 @@
         var state       = component.get("v.state");
         var country     = component.get("v.country");
         
+        var latitude    = component.get("v.latitude");
+        var longitude   = component.get("v.longitude");
+        
         var formattedAddress = component.get("v.formattedAddress");
         
         var action = component.get("c.saveAddress");
         action.setParams({
-                 "placeId":placeId,
-                "recordId":recordId,
-              "objectName":objectName,
-              "postalCode":postalCode,
-                    "city":city,
-                   "state":state,
-                 "country":country,
-        "formattedAddress":formattedAddress
+               "placeId":placeId,
+              "recordId":recordId,
+            "objectName":objectName,
+    "JSONresponsePlaces":JSONresponsePlaces,
+            "postalCode":postalCode,
+                  "city":city,
+                 "state":state,
+               "country":country,
+      "formattedAddress":formattedAddress,
+              "latitude":latitude,
+             "longitude":longitude
         });
         action.setCallback(this, function(response){
             
@@ -93,6 +150,7 @@
                         "message": "The property's info has been saves.",
                         "type": "Success"
                     });
+                    window.location.reload();
                 }else{
                     toastEvent.setParams({
                         "title": "Error!",
