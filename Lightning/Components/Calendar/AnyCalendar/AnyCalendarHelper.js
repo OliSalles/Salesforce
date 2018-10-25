@@ -1,15 +1,15 @@
 ({
-	getEvents : function(component, event) {
-		var action = component.get("c.getEvents");
+    getEvents : function(component, event) {
+        var action = component.get("c.getEvents");
         
-        action.setParams({ 
-            sObjectName : component.get("v.sObjectName"),
-            titleField : component.get("v.titleField"),
-            startDateTimeField : component.get("v.startDateTimeField"),
-            endDateTimeField : component.get("v.endDateTimeField"),
-            descriptionField : component.get("v.descriptionField"),
-            userField : component.get("v.userField"),
-            filterByUserField : component.get("v.filterByUserField")
+        action.setParams({              
+                sObjectName : component.get("v.sObjectName"),
+                 titleField : component.get("v.titleField"),
+         startDateTimeField : component.get("v.startDateTimeField"),
+           endDateTimeField : component.get("v.endDateTimeField"),
+           descriptionField : component.get("v.descriptionField"),
+                  userField : component.get("v.userField"),
+          filterByUserField : component.get("v.filterByUserField")
         });
         
         action.setCallback(this, function(response) {
@@ -34,5 +34,5 @@
         });
         
         $A.enqueueAction(action);
-	}
+    }
 })
