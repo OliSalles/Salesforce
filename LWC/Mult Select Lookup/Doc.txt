@@ -1,0 +1,18 @@
+HTML
+
+	<c-multi-select-lookup 
+		onregistros={handleOwnerSelection} 
+		objectname="Contact"
+		objectlabel="Contato" > 
+	</c-multi-select-lookup>
+
+
+JS
+
+    @track selectedUsers    = [];
+    @api   selectedUsersIds = [];   
+
+    handleOwnerSelection(event) {
+        this.selectedUsers = event.detail;
+        this.selectedUsersIds = this.selectedUsers.map(users => users.Id); 
+    } 

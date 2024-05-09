@@ -1,0 +1,22 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 05-07-2024
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
+<template>
+    <lightning-card variant="Narrow" title={title} icon-name="standard:apps">
+        <div class="slds-p-horizontal_small">
+            <c-multi-select-card objectname={objectname} fieldnames=" Id, Name, Email, Phone "
+                onselected={handleselectedCompanyRecords} icon-name="standard:user" placeholder={placeholder}>
+            </c-multi-select-card>
+            <template if:true={selectedRecordsLength}>
+                <div class="slds-m-top_medium">
+                    <lightning-datatable key-field="id" data={selectedRecords} hide-checkbox-column columns={columns}>
+                    </lightning-datatable>
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>
