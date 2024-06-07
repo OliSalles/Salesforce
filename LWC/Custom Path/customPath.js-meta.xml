@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>59.0</apiVersion>
+    <isExposed>true</isExposed>
+    <targets>
+        <target>lightning__RecordPage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__RecordPage">
+            <property name="picklistField" label="Picklist Field" required="false" type="String" description="Nome da API do campo de lista de seleção usado para renderizar o caminho. Este campo deve estar incluído nos layouts de página." />
+            <property name="closedOk" label="Closed OK step" required="false" type="String" description="Valor da lista de seleção que representa uma etapa concluída com sucesso. Quando selecionado, renderizará uma barra de progresso verde." />
+            <property name="closedKo" label="Closed KO step" required="false" type="String" description="Valor de lista de seleção que representa uma etapa fechada não OK. Quando selecionado, renderizará uma barra de progresso vermelha." />
+            <property name="lastStepLabel" label="Label of last step" required="false" type="String" description="Rótulo a ser atribuído à última etapa quando o usuário precisa selecionar entre a etapa 'Fechado OK' e a etapa 'Fechado KO." />
+            <property name="hideUpdateButton" label="Hide update button" type="Boolean" />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

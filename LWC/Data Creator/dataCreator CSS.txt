@@ -1,0 +1,20 @@
+.slds-box {
+    background-color: #f4f6f9;
+    border: 1px solid #dddbda;
+    border-radius: 0.25rem;
+}
+
+.slds-theme_default {
+    color: #16325c;
+    font-family: "Salesforce Sans", Arial, sans-serif;
+}
+
+.lightning-card {
+    --slds-c-card-color-background: #ffffff;
+    --slds-c-card-border-radius: 0.25rem;
+    --slds-c-card-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.slds-text-color_success {
+    color: #2e8540;
+}
