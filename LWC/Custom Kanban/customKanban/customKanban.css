@@ -1,0 +1,61 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* Ajuste conforme necessário */
+}
+
+.kanban-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.kanban {
+    flex: 1;
+    display: flex;
+}
+
+.column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #d8dde6;
+    border-radius: 4px;
+    background-color: #f4f6f9;
+    margin-right: 5px;
+}
+
+.column:last-child {
+    margin-right: 0;
+}
+
+.column-header {
+    /* Opcional: estilo para o cabeçalho da coluna */
+}
+
+.column-body {
+    flex: 1;
+    overflow-y: auto;
+}
+
+.card {
+    background-color: #ffffff;
+    border: 1px solid #d8dde6;
+    border-radius: 4px;
+    padding: 10px;
+    cursor: grab;
+    display: flex;
+    align-items: center;
+}
+
+.icon {
+    margin-right: 5px;
+}
+
+/* Classes de status */
+.status-parceiro-ativo { border-top: 4px solid #28a745; }
+.status-recuperar-parceiro { border-top: 4px solid #ffc107; }
+.status-manter-parceiro { border-top: 4px solid #17a2b8; }
+.status-potencializar-parceiro { border-top: 4px solid #007bff; }
+.status-inativar-parceiro { border-top: 4px solid #dc3545; }
+.status-default { border-top: 4px solid #6c757d; }

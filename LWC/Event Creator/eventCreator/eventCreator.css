@@ -1,0 +1,182 @@
+/* Estilo do título */
+.custom-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 15px 20px 5px 20px;
+    color: #0079C2;
+}
+
+.full-width {
+    width: 100%;
+}
+
+/* Estilo para campos de formulário */
+.field {
+    width: 100%; /* Faz o campo ocupar 100% da largura disponível */
+    padding: 8px; /* Adiciona espaçamento interno ao campo */
+    font-size: 12px;
+    font-family: 'Open Sans', Arial, sans-serif;
+    /* border: 1px solid #006098; /* Define a cor da borda para #006098 */ 
+    border-radius: 4px; /* Bordas arredondadas no campo */
+    box-sizing: border-box; /* Garante que padding e borda sejam incluídos na largura total */
+}
+
+/* Adicional para textarea */
+.field.textarea {
+    resize: vertical; /* Permite redimensionar verticalmente */
+    min-height: 100px; /* Define uma altura mínima para o textarea */
+}
+
+
+/* Estilo da descrição */
+.description {
+    font-size: 12px;
+    font-family: 'Open Sans', Arial, sans-serif;
+    display: block; /* Faz com que o texto e o campo fiquem em blocos separados */
+    margin-bottom: 30px; 
+    /* font-weight: 600; */
+    text-align: left; /* Alinha o texto à esquerda */
+}
+
+.description label {
+    display: block; 
+    margin-top: 15px;
+    margin-bottom: 5px; /* Espaçamento entre o texto e o campo */
+}
+
+.description textarea {
+    width: 100%; /* Faz o campo ocupar 100% da largura disponível */
+    padding: 8px; /* Adiciona espaçamento interno ao campo */
+    font-size: 12px;
+    font-family: 'Open Sans', Arial, sans-serif;
+    /* border: 1px solid #006098; /* Define a cor da borda para #006098 */  
+    border-radius: 4px; /* Bordas arredondadas no campo */
+    resize: vertical; /* Permite redimensionar verticalmente */
+    min-height: 100px; /* Define uma altura mínima para o textarea */
+} 
+
+.button-container {
+    display: flex;
+    justify-content: space-between; /* Mantém os botões nas extremidades */
+    padding: 30px 20px 10px 20px; /* Aumenta o padding superior para 20px */
+    border-top: 1px solid #bbbbbb; /* Linha superior */
+    background-color: #ffffff; /* Fundo do container */
+    width: 100%; /* Ocupar toda a largura disponível */
+    box-sizing: border-box; /* Inclui padding e borda na largura total */
+}
+
+.cancel-button-container {
+    flex-grow: 1;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.cancel-button {
+    background-color: white;
+    color: #007bff;
+    border: 1px solid #007bff;
+    border-radius: 4px;
+    padding: 7px 20px;
+    font-size: 14px;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: 13px; /* Diminui o tamanho da fonte */
+    width: 90%; /* Alargue o botão para ocupar 48% da largura do container */
+}
+
+.cancel-button:hover {
+    background-color: #f0f8ff; /* Leve fundo azul ao passar o mouse */
+}
+
+.create-button-container {
+    flex-grow: 1;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.create-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 20px;
+    font-size: 14px;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: 13px; /* Diminui o tamanho da fonte */
+    width: 95%; /* Alargue o botão para ocupar 48% da largura do container */
+}
+
+.create-button:hover {
+    background-color: #0056b3; /* Fundo azul mais escuro ao passar o mouse */
+}
+
+
+
+
+/* Estilo do criador de atividades */
+.activity-creator {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+/* Estilo dos compromissos diários */
+.daily-appointments {
+    padding: 1rem;
+}
+
+/* Estilo do título dos compromissos */
+.appointments-title {
+    font-weight: 600;
+    color: #0079C2;
+    margin-bottom: 1rem;
+}
+
+/* Estilo do subtítulo dos compromissos */
+.appointments-subtitle {
+    color: #777777;
+    margin-bottom: 1rem;
+    font-size: 14px;
+}
+
+/* Estilo de cada compromisso */
+.appointment {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    padding: 10px;
+    border: 1px solid #E0E0E0;
+    border-radius: 5px;
+    background-color: #FFFFFF;
+}
+
+/* Estilo da hora do compromisso */
+.time {
+    color: #777777;
+    width: 60px;
+    font-weight: 600;
+}
+
+/* Estilo das atividades */
+.activity {
+    flex-grow: 1;
+    padding: 0.5rem;
+    border-radius: 4px;
+    text-align: center;
+    color: white;
+}
+
+/* Cores das atividades de acordo com o tipo */
+.maintenance {
+    background-color: #2C7474;
+}
+
+.prospecting {
+    background-color: #0079C2;
+}
+
+.admin {
+    background-color: #956F45;
+}

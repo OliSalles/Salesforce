@@ -1,0 +1,37 @@
+
+<template>
+    <lightning-card>
+
+        <div class="title">
+            Importe Leads via Planilha
+        </div>
+
+        <!-- Instructions for downloading the import model and uploading files -->
+        <div class="instructions slds-text-align_center">
+            <a href="javascript:void(0);" class="download-link" onclick={handleDownloadExcel}>Baixe o modelo de importação</a>, 
+            adicione seus leads no arquivo e importe a planilha para gerenciar todos os seus leads em um só lugar.
+        </div>
+
+        <template if:true={isLoading}>
+            <lightning-spinner alternative-text="Carregando..." size="medium"></lightning-spinner>
+        </template>
+
+        <!-- Upload section with dashed border and centered button -->
+
+        <div class="slds-align_absolute-center">
+            <div class="upload-container" if:false={isLoading}>
+                <input class="upload-button" type="file" accept=".csv,.xls,.xlsx" onchange={handleFileUpload}/>
+                <p class="drop-instructions">Ou soltar arquivos.</p>
+            </div>
+        </div>
+        
+        <!-- Success and error messages -->
+        <template if:true={successMessage}>
+            <p class="success-message">{successMessage}</p>
+        </template>
+        <template if:true={errorMessage}>
+            <p class="error-message">{errorMessage}</p>
+        </template>
+
+    </lightning-card>
+</template>

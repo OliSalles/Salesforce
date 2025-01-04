@@ -1,0 +1,56 @@
+<template>
+    <div class="kanban-container">
+        <div class="kanban slds-grid">
+            <template if:true={columns}>
+                <template for:each={columns} for:item="column">
+                    <div key={column.status}
+                         class={column.className}
+                         data-status={column.status}
+                         ondragover={allowDrop}
+                         ondrop={handleDrop}>
+
+                        <div class="column-header slds-p-around_small"> 
+                            <h2 class="slds-text-heading_small">{column.status} ({column.totalCount})</h2>
+                        </div>
+
+                        <div class="column-body slds-p-horizontal_small slds-p-vertical_x-small">
+                            <template if:true={column.manutencoes}>
+                                <template for:each={column.manutencoes} for:item="manutencao"> 
+                                    <div key={manutencao.Id}
+                                         class="card slds-box slds-m-bottom_small"
+                                         draggable="true"
+                                         data-id={manutencao.Id}
+                                         ondragstart={handleDragStart}>
+                                        <lightning-icon class="icon"
+                                                        icon-name="standard:account"
+                                                        alternative-text="Conta"
+                                                        size="small">
+                                        </lightning-icon>
+                                        <span>{manutencao.Name}</span>
+                                    </div> 
+                                </template>
+                            </template>
+                        </div>
+
+                        <!-- Paginação por coluna -->
+                        <div class="slds-m-top_small slds-text-align_center">
+                            <lightning-button variant="brand-outline"
+                                              label="Anterior"
+                                              onclick={handlePreviousPageForColumn}
+                                              data-status={column.status}
+                                              disabled={column.isFirstPage}>
+                            </lightning-button>
+                            <span class="slds-m-horizontal_small">Página {column.currentPage}</span>
+                            <lightning-button variant="brand-outline"
+                                              label="Próximo"
+                                              onclick={handleNextPageForColumn}
+                                              data-status={column.status}
+                                              disabled={column.isLastPage}>
+                            </lightning-button>
+                        </div>
+                    </div>
+                </template>
+            </template>
+        </div>
+    </div>
+</template>

@@ -1,0 +1,18 @@
+<template>
+    <lightning-card >
+        <div class="slds-p-around_medium">
+        
+            <label class="custom-file-input">
+                Importar Price Items
+                <input type="file" accept=".xls,.xlsx" onchange={handleFileUpload} disabled={isLoading}/>
+            </label>  
+            
+            <!-- Spinner de carregamento -->
+            <template if:true={isLoading}>
+                <div class="slds-spinner_container">
+                    <lightning-spinner alternative-text="Carregando..." size="large"></lightning-spinner>
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>

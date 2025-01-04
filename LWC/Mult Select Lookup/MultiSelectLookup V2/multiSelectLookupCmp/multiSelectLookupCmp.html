@@ -1,0 +1,26 @@
+<!--
+  @description       : 
+  @author            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 07-10-2024
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
+<template> 
+    <template if:true={enableLayout}> 
+        <lightning-card variant="Narrow" title={title} icon-name="standard:buyer_group_qualifier">
+            <div class="slds-p-horizontal_small">
+                <c-multi-select-lookup objectname={objectname} fieldnames=" Id, Name " ismultiselect={ismultiselect} condition={condition}
+                    onselected={handleselectedCompanyRecords} icon-name="standard:user" placeholder={placeholder} record-type-name={recordTypeName}>
+                </c-multi-select-lookup> 
+            </div> 
+        </lightning-card>
+    </template>
+    
+    <template if:false={enableLayout}>
+        <div class="slds-p-horizontal_small" >
+            <c-multi-select-lookup objectname={objectname} fieldnames=" Id, Name " ismultiselect={ismultiselect} condition={condition}
+                onselected={handleselectedCompanyRecords} icon-name="standard:user" placeholder={placeholder} record-type-name={recordTypeName}>
+            </c-multi-select-lookup>  
+        </div>
+    </template> 
+</template>

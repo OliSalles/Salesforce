@@ -1,0 +1,68 @@
+
+.title {
+    font-size: 15px;
+    display: flex;
+    font-weight: 600; 
+    margin: 10px 20px 5px 20px; 
+}
+
+.instructions {
+    font-size: 13px;
+    font-family: 'Open Sans', Arial, sans-serif;
+    text-align: justify;
+    margin: 5px 20px 20px; 
+    color: #777777; 
+}
+
+.download-link {
+    color: #0079C2;
+    font-weight: 500;
+    text-decoration: underline;
+}
+
+.upload-container {
+    border: 1px dashed #d3d3d3;
+    padding: 1.0rem;
+    text-align: center;
+    border-radius: 0.25rem; 
+    margin: 1rem;
+    max-width: 400px;
+}
+
+.upload-button {
+    background-color: white;
+    border: 1px solid #0070d2;
+    color: #0070d2;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 0.875rem;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+.upload-button:hover {
+    background-color: #f4f6f9;
+}
+
+.drop-instructions {
+    background-color: white;  
+    font-size: 13px;
+    font-family: 'Open Sans', Arial, sans-serif;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center; /* Centraliza o conteúdo horizontalmente */ 
+    margin: 5px 20px 20px; 
+    color: #777777;
+}
+
+.success-message {
+    color: green;
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.error-message {
+    color: red;
+    text-align: center;
+    margin-top: 1rem;
+}

@@ -1,0 +1,50 @@
+.lookup-container {
+    position: relative;
+}
+
+.results-list {
+    border: 1px solid #ccc;
+    max-height: 200px;
+    overflow-y: auto;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.result-item {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.result-item:hover {
+    background-color: #f0f0f0;
+}
+
+.selected-items {
+    margin-top: 10px;
+}
+
+.selected-item {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 5px;
+}
+
+.item-name {
+    flex: 1;
+}
+
+.item-description {
+    margin-left: 10px;
+    color: #888;
+}
+
+.remove-item {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: red;
+    font-weight: bold;
+}

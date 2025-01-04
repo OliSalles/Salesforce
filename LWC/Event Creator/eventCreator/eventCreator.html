@@ -1,0 +1,222 @@
+<!--
+  @description       : 
+  @autor            : ChangeMeIn@UserSettingsUnder.SFDoc
+  @group             : 
+  @last modified on  : 07-10-2024
+  @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
+-->
+<template>
+    <template if:true={isLoading}>
+        <lightning-spinner alternative-text="Carregando"></lightning-spinner>
+    </template>
+    <template if:false={isLoading}> 
+        <lightning-input 
+            data-id="tituloEvento" 
+            type="text" 
+            label="Assunto"
+            required
+            onchange={handleTituloChange}>
+        </lightning-input>
+        <template if:true={showTituloError}>
+            <div class="slds-text-color_error slds-m-top_x-small">
+                Este campo é obrigatório.
+            </div>
+        </template>
+
+        <lightning-datetimepicker 
+            label="Data e Hora de Início" 
+            class="full-width" 
+            value={startDateTime} 
+            required
+            onchange={handleStartDateTimeChange}>
+        </lightning-datetimepicker>
+        <template if:true={showStartDateError}>
+            <div class="slds-text-color_error slds-m-top_x-small">
+                Este campo é obrigatório.
+            </div>
+        </template>
+
+        <lightning-datetimepicker 
+            label="Data e Hora de Fim" 
+            class="full-width" 
+            value={endDateTime} 
+            required
+            onchange={handleEndDateTimeChange}>
+        </lightning-datetimepicker>
+        <template if:true={showEndDateError}>
+            <div class="slds-text-color_error slds-m-top_x-small">
+                Este campo é obrigatório.
+            </div>
+        </template>
+
+        <lightning-input 
+            label="Recorrência"
+            type="toggle"
+            checked={recurrence}
+            onchange={handleRecurrenceChange}>
+        </lightning-input>
+
+        <lightning-combobox 
+            name="recurrenceType" 
+            label="Tipo de Recorrência" 
+            placeholder="Selecione um valor"
+            options={recurrenceTypeOptions} 
+            value={recurrenceType}
+            onchange={handleRecurrenceTypeChange}
+            lwc:if={recurrence}>
+        </lightning-combobox>
+
+        <lightning-input 
+            label="Fim da Recorrência"
+            type="date"
+            class="full-width" 
+            value={dateToEndRecurrence}
+            onchange={handleRecurrenceDateChange}
+            lwc:if={recurrence}>
+        </lightning-input>
+
+
+        <lightning-combobox 
+            name="levelOne" 
+            label="Nivel 1" 
+            placeholder="Selecione um valor"
+            options={levelOneOptions} 
+            value={levelOne}
+            required
+            onchange={handleLevelOneChange}
+            disabled={disabledlevelone}>
+        </lightning-combobox>
+        <template if:true={showLevelOneError}>
+            <div class="slds-text-color_error slds-m-top_x-small">
+                Este campo é obrigatório.
+            </div>
+        </template>
+
+        <lightning-combobox 
+            name="levelTwo" 
+            label="Nivel 2" 
+            placeholder="Selecione um valor"
+            options={levelTwoOptions} 
+            required
+            onchange={handlelevelTwoChange}>
+        </lightning-combobox> 
+        <template if:true={showLevelTwoError}>
+            <div class="slds-text-color_error slds-m-top_x-small">
+                Este campo é obrigatório.
+            </div>
+        </template>
+
+        <lightning-combobox 
+            name="levelThree" 
+            label="Nivel 3" 
+            placeholder="Selecione um valor"
+            options={levelThreeOptions} 
+            required
+            onchange={handlelevelThreeChange}>
+        </lightning-combobox> 
+        <template if:true={showLevelThreeError}>
+            <div class="slds-text-color_error slds-m-top_x-small">
+                Este campo é obrigatório.
+            </div>
+        </template>
+
+        <lightning-combobox 
+            name="levelFour"  
+            label="Nivel 4" 
+            placeholder="Selecione um valor"
+            options={levelFourOptions} 
+            onchange={handlelevelFourChange}
+            disabled={isLevelFourDisabled}>
+        </lightning-combobox>  
+
+        <template if:true={EventLead}>
+            <div class="slds-p-top_small">
+                <c-multi-select-lookup-cmp 
+                    onregistros={handleOwnerSelection} 
+                    objectname="Lead"
+                    objectlabel="Prospects" 
+                    record-type-name="GAC Lideres"
+                    ismultiselect="true"
+                    enable-layout={enableLayout}> 
+                </c-multi-select-lookup-cmp>
+                <template if:false={showParticipantError}>
+                    <div class="slds-text-color_error slds-m-top_x-small">
+                        Este campo é obrigatório.
+                    </div>
+                </template>
+            </div> 
+        </template>
+
+        <template if:true={EventAccount}>
+            <div class="slds-p-top_small">
+                <c-multi-select-lookup-cmp 
+                    onregistros={handleOwnerSelection} 
+                    objectname="Manutencao__c"
+                    objectlabel="Contas" 
+                    ismultiselect="true"
+                    enable-layout={enableLayout}> 
+                </c-multi-select-lookup-cmp>
+                <template if:false={showParticipantError}>
+                    <div class="slds-text-color_error slds-m-top_x-small">
+                        Este campo é obrigatório.
+                    </div>
+                </template>
+            </div> 
+        </template>
+
+        <template if:true={EventUsers}>
+            <div class="slds-p-top_small">
+                <c-multi-select-lookup-cmp 
+                    onregistros={handleOwnerSelection} 
+                    objectname="Manutencao__c"
+                    objectlabel="Contas" 
+                    ismultiselect="true"
+                    enable-layout={enableLayout}> 
+                </c-multi-select-lookup-cmp>
+                <template if:false={showParticipantError}>
+                    <div class="slds-text-color_error slds-m-top_x-small">
+                        Este campo é obrigatório.
+                    </div>
+                </template>
+            </div> 
+        </template>
+    <!--
+        <template if:true={EventUsers}>
+            <div class="slds-p-top_small">
+                <c-multi-select-lookup-cmp
+                    onregistros={handleOwnerSelection} 
+                    objectname="User"
+                    objectlabel="Usuarios" 
+                    ismultiselect="true"
+                    enable-layout={enableLayout}> 
+                </c-multi-select-lookup-cmp>
+            </div>
+        </template> 
+    -->
+        <lightning-combobox 
+            name="EventType" 
+            label="Tipo de Visita" 
+            placeholder="Selecione um valor"
+            options={eventTypeOptions}
+            onchange={handleEventTypeChange}>
+        </lightning-combobox>    
+
+        <lightning-textarea data-id="descricaoEvento" label="Descrição"> </lightning-textarea>
+
+        <div class="slds-grid slds-grid_align-end slds-m-top_medium"> 
+
+            <div class="button-container">
+                <div class="cancel-button-container">
+                    <button class="cancel-button" onclick={handleCancel}>
+                        CANCELAR
+                    </button>
+                </div>
+                <div class="create-button-container">
+                    <button class="create-button" onclick={handleSave}>
+                        CRIAR
+                    </button>
+                </div>
+            </div>
+        </div> 
+    </template> 
+</template>

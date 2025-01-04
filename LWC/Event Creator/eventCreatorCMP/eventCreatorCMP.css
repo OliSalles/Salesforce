@@ -1,0 +1,137 @@
+.custom-title {
+    font-size: 15px;
+    display: flex;
+    font-weight: 600; 
+    margin: 10px 20px 5px 20px;
+}
+
+.description { 
+    background-color: white;  
+    font-size: 13px;
+    font-family: 'Open Sans', Arial, sans-serif;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center; /* Centraliza o conteúdo horizontalmente */ 
+    margin: 5px 20px 20px; 
+    color: #777777;
+
+}
+
+.custom-button {
+    width: calc(100% - 40px); /* Subtrai 10px para considerar 5px de cada lado */
+    height: 35px;
+    background-color: white;
+    color: #0079C2;
+    border: 1px solid #0079C2;
+    border-radius: 5px;
+    padding: 5px, 14px, 5px, 14px;
+    font-size: 13px;
+    font-family: 'Open Sans', Arial, sans-serif;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center; /* Centraliza o conteúdo horizontalmente */
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    margin: 0 20px; /* Adiciona 5px de margem em cada lado */
+} 
+
+.custom-button .plus-sign {
+    font-size: 25px; 
+    margin-right: 5px;
+    font-weight: 100;
+} 
+
+.custom-button:hover {
+    background-color: #0079C2;
+    color: white;
+}
+
+
+.activity-creator {
+    text-align: center;
+    margin-bottom: 1rem;
+} 
+
+.daily-appointments {
+    padding: 1rem;
+}
+
+.appointments-title {
+    font-weight: 600;
+}
+
+.appointments-subtitle {
+    color: #777777;
+    margin-bottom: 1rem;
+}
+
+.appointment {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+} 
+
+.time {
+    color: #777777;
+    width: 40px;
+    font-weight: 600;
+}
+
+.date {
+    margin-right: 5px;
+    color: #777777;
+    width: 60px;
+    font-weight: 600;
+}
+
+.activity {
+    flex-grow: 1;
+    padding: 0.5rem;
+    border-radius: 4px;
+    text-align: center;
+    color: white;
+}
+
+.viewAll {
+    display: flex;
+    justify-content: center;
+    align-items: center;  
+    font-weight: 600;
+} 
+
+.clickable-span {
+    color: #0079C2;
+    cursor: pointer; 
+}
+
+.clickable-span:hover {
+    color: #0063a0;
+}
+
+.maintenance {
+    background-color: #2C7474;
+}
+
+.maintenance:hover {
+    background-color: #215656;
+    cursor: pointer; 
+}
+
+.prospecting {
+    background-color: #0079C2;
+}
+
+.prospecting:hover {
+    background-color: #0063a0;
+    color: white;
+    cursor: pointer; 
+}
+
+.admin {
+    background-color: #956F45;
+}
+
+.admin:hover {
+    background-color: #6f512f;
+    cursor: pointer; 
+}

@@ -1,0 +1,89 @@
+<template>
+    <div class="box-outline">
+
+        <!-- Spinner de carregamento -->
+        <template if:true={isLoading}>
+            <div class="slds-spinner_container">
+                <lightning-spinner alternative-text="Carregando..." size="large"></lightning-spinner>
+            </div>
+        </template>
+
+        <lightning-card title="Gestão de Price Items" icon-name="custom:custom18">
+            <div class="slds-card__body">
+                <p>Utilize o botão de exportar para fazer o download dos price items deste Bundle e aproveite o mesmo arquivo para fazer o import dos price items atualizados.</p>
+            </div>
+
+            <div class="slds-card__header slds-grid slds-grid_align-center slds-grid_vertical-align-center">
+                <div class="slds-m-right_small">
+                    <lightning-button 
+                        label="Exportar Price Items" 
+                        onclick={openModal}
+                        disabled={isLoading}>
+                    </lightning-button>
+                </div>
+                <div>
+                    <c-price-item-import 
+                        record-id={recordId}
+                        onsendtoast={handleToastEvent}>
+                    </c-price-item-import>
+                </div>
+            </div>
+
+            <footer class="slds-card__footer">
+                <!-- Exibição do status do último carregamento -->
+                <template if:true={lastEventStatus}>
+                    <div class="slds-m-top_medium slds-grid slds-gutters">
+                        <!-- Coluna 1: Price Items -->
+                        <div class="slds-col">
+                            <strong>Sucesso (Price Items): </strong> 
+                            <span style="color:green;"> {successCountPriceItems}</span><br/>
+                            <strong>Erros (Price Items): </strong> 
+                            <span style="color:red;"> {errorCountPriceItems}</span>
+                        </div>
+        
+                        <!-- Coluna 2: Relacionamentos -->
+                        <div class="slds-col">
+                            <strong>Sucesso (Relacionamentos): </strong> 
+                            <span style="color:green;"> {successCountRelations}</span><br/>
+                            <strong>Erros (Relacionamentos): </strong> 
+                            <span style="color:red;"> {errorCountRelations}</span>
+                        </div>
+                    </div>
+        
+                    <!-- Linha abaixo das colunas para Status e Mensagem -->
+                    <div class="slds-m-top_medium">
+                        <strong>Mensagem:</strong> {statusMessage}<br/><br/>
+                    </div>
+                </template>
+            </footer>
+        </lightning-card>
+
+        <!-- Modal -->
+        <template if:true={isModalOpen}>
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">
+                            Selecione o formato de exportação
+                        </h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium">
+                        <div class="slds-grid slds-grid_align-center slds-gutters">
+                            <div class="slds-col slds-shrink-none">
+                                <lightning-button label="CSV" onclick={exportAsCSV} class="slds-m-right_small"></lightning-button>
+                            </div>
+                            <div class="slds-col slds-shrink-none">
+                                <lightning-button label="Excel" onclick={exportAsExcel}></lightning-button>
+                            </div>
+                        </div>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <lightning-button variant="neutral" label="Cancelar" onclick={closeModal}></lightning-button>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
+    </div>
+</template>
